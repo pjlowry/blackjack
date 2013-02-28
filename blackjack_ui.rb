@@ -7,8 +7,8 @@ deck = Deck.new
 game = Game.new
 dealer = Dealer.new('Dealer')
 
-puts "Player 1, how much do you want to put down?"
-gets.chomp
+# puts "Player 1, how much do you want to put down?"
+# gets.chomp
 until game.over? #|| 'q'
   puts "Player 1, how much do you want to put down?"
   money = gets.chomp

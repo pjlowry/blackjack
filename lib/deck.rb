@@ -6,11 +6,14 @@ class Deck
     @suit = %w{Spades Hearts Diamonds Clubs}
 
     @full_deck = @rank.product(@suit)
+    #@new_deck = @full_deck.each { |x| p x.join(" of ")}
      
   end
 
   def deal(player)
-    player.receive_cards(@full_deck.pop(2))
+    player.receive_cards(@full_deck.pop(2)).each { |x| p x.join(" of ")}
+   
+
   end
 
   def hit(player)
