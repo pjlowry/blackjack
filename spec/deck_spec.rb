@@ -29,6 +29,15 @@ describe 'Deck' do
 
     end
   end
+
+  context '#initialize' do 
+    it "creates an instance of deck" do
+      deck = Deck.new
+      
+      deck.should be_an_instance_of Deck
+    
+    end
+  end
 end
 
 

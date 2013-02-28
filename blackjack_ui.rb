@@ -16,7 +16,7 @@ until game.over? #|| 'q'
   bet = gets.chomp
   puts "Here is the deal:"
   deck.deal(player)
-  p player.hand
+  player.hand#.each { |x| p x.join(" of ")}
   p player.hand_value
 
   puts "Here is what the dealer is showing:"
