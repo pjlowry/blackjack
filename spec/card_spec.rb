@@ -17,7 +17,7 @@ describe 'Card' do
 
   context '#value' do 
     it '10 for a king' do 
-      card = Card.new('10', 'Hearts')
+      card = Card.new('K', 'Hearts')
       card.value.should eq 10
     end
   end

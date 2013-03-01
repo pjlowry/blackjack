@@ -1,41 +1,96 @@
-require 'spec_helper'
+require './lib/person'
+require './lib/player'
+require './lib/card'
+require './lib/deck'
+require './lib/game'
+require './lib/dealer'
+require './lib/turn'
 
 
-puts "Welcome to Blackjack. Please have a seat."
+
+
+puts "Welcome to Blackjack. Please have a seat.\n\n"
+
 player = Player.new('Player 1')
 deck = Deck.new
 game = Game.new
 dealer = Dealer.new('Dealer')
 
-# puts "Player 1, how much do you want to put down?"
-# gets.chomp
+
 until game.over? #|| 'q'
   puts "Player 1, how much do you want to put down?"
   money = gets.chomp
-  puts "Go ahead and make a bet."
-  bet = gets.chomp
-  puts "Here is the deal:"
-  deck.deal(player)
-  player.hand#.each { |x| p x.join(" of ")}
-  p player.hand_value
+  turn = Turn.new(player, dealer)
+  until turn.over?
+    puts "Go ahead and make a bet or press 'w' to walk away."
+    bet = gets.chomp
+    puts "Here is your hand:"
+    deck.deal(player)
+    player.hand.each {|card| puts card}
+    puts "\n"
 
-  puts "Here is what the dealer is showing:"
-  deck.deal(dealer)
-  p dealer.dealer_hand[0]
-  p dealer.dealer_hand #TAKE THIS OUT AFTER TESTING
-  p dealer.hand_value
+    puts "Here is what the Dealer is showing:"
+    deck.deal(dealer)
+    p dealer.hand[0]
+    puts "\n"
+    # p dealer.hand #TAKE THIS OUT AFTER TESTING
+    # # dealer.hand_value
 
-  puts "Player 1, you have a #{player.hand_value}, what action would you like to take?"
-  puts "You can press 'h' to hit or 's' to stand." #split, double down
-  player_choice = gets.chomp
-    if player_choice == 'h'
-      until player_choice == 's' || player.hand_value > 21
-        player.hit
+    if turn.blackjack?
+      puts "Player 1, you have a Blackjack!"
+      turn.over? == true
+    else
+      puts "Player 1, you have a #{player.hand_value}, what action would you like to take?"
+      puts "You can press 's' to stand or any other key to hit." #split, double down
+      player_choice = gets.chomp
+      if player_choice == 's'
+        turn.over? == true
+      
+      elsif player_choice == 'h'
+        deck.hit(player)
+        player.hand.each {|card| puts card}
+          if turn.bust?
+            puts "Player 1, you have a #{player.hand_value}. You bust!"
+            turn.over? == true
+              # lose bet
+          else
+            puts "Player 1, you have a #{player.hand_value}, what action would you like to take? 'h' hit? or 's' stand?"
+          end
+
+        end
       end
+    end 
+  #dealer turn
+  
+  if turn.blackjack?
+    puts "Dealer has Blackjack"
 
-    elsif player_choice == 's'
+  else
+    puts "Dealer's cards are:"
+    dealer.hand.each {|card| puts card}
+    puts "Dealer has a #{dealer.hand_value}."
+      until dealer.hand_value >= 17 
+        deck.hit(dealer)
+        # dealer.hand.each {|card| puts card}
+        puts "Dealer hits and gets #{deck.hit(dealer)}"
+        puts "Dealer has a: #{dealer.hand_value}"
+      end
+    end
+    if turn.push?
+      puts "Push. You get your money back."
+      # gets money back.
+    end
 
-   end
+    if turn.winner?
+      puts "You Win!"
+      # add money to bank.
+    end
+
+    player.discard_cards
+    dealer.discard_cards
+    # puts "Would you like to play another hand?"
+
+  end
 end
 
     
