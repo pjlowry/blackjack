@@ -44,24 +44,24 @@ until game.over? #|| 'q'
       puts "You can press 's' to stand or 'h' to hit." #split, double down
       player_choice = gets.chomp
 
-      until player_choice == 's'
+      until player_choice == 's' #this makes an endless loop of hit cards!!!!!!!!!!!!!!!!
         #run the hit loop
 
         #once s is chosen, end loop and...
         #puts "You chose to stay with a #{player.hand_value}. Now for the dealer."
       
-      elsif player_choice == 'h'
-        deck.hit(player)
-        player.hand.each {|card| puts card}
-          if turn.bust?
-            puts "Player 1, you have a #{player.hand_value}. You bust!"
-            turn.over? == true
-              # lose bet
-          else
-            puts "Player 1, you have a #{player.hand_value}, what action would you like to take? 'h' hit? or 's' stand?"
-          end
+        if player_choice == 'h'
+          deck.hit(player)
+          player.hand.each {|card| puts card}
+            if turn.bust?
+              puts "Player 1, you have a #{player.hand_value}. You bust!"
+              turn.over? == true
+                # lose bet
+            else
+              puts "Player 1, you have a #{player.hand_value}, what action would you like to take? 'h' hit? or 's' stand?"
+            end
+        end    
 
-        end
       end
     end 
   #dealer turn
