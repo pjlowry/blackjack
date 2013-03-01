@@ -41,10 +41,14 @@ until game.over? #|| 'q'
       turn.over? == true
     else
       puts "Player 1, you have a #{player.hand_value}, what action would you like to take?"
-      puts "You can press 's' to stand or any other key to hit." #split, double down
+      puts "You can press 's' to stand or 'h' to hit." #split, double down
       player_choice = gets.chomp
-      if player_choice == 's'
-        turn.over? == true
+
+      until player_choice == 's'
+        #run the hit loop
+
+        #once s is chosen, end loop and...
+        #puts "You chose to stay with a #{player.hand_value}. Now for the dealer."
       
       elsif player_choice == 'h'
         deck.hit(player)
